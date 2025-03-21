@@ -1,0 +1,22 @@
+name: GitHub VPS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual execution
+  schedule:
+    - cron: "*/15 * * * *" # Runs every 15 minutes (adjust as needed)
+
+jobs:
+  run-vps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        run: |
+          echo "Starting VPS simulation..."
+          sudo apt update && sudo apt install -y screen
+          screen -dmS myserver bash -c 'while true; do echo "Running..."; sleep 60; done'
+      - name: Keep Alive
+        run: |
+          while true; do echo "Process is running"; sleep 300; done
